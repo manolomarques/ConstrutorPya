@@ -1,59 +1,53 @@
 # 1 - imports
-from urllib import response
-
 import pytest
 import csv
-import requests as requests
+
+import requests
 from requests import HTTPError
 
-teste_dados_usuarios = [
-    ('1', 'João', 'Das Couves', 'couves@jardim.com.br'),
-    ('2', 'Maria', 'Solene', 'solene@jardim.com.br'),
-    ('3', 'Paloma', 'Ganbu', 'ganbu@jardim.com.br'),
-    ('4', 'Mirtes', 'Bragança', 'bragan@jardim.com.br'),
-    ('5', 'Adolfo', 'Soares', 'soares@jardim.com.br')
+teste_dados_novos_usuarios = [
+    (1, 'Juca', 'Pirama', 'juca@iterasys.com.br'),         # usuário 1
+    (2, 'Agatha', 'Christie','agatha@iterasys.com.br')     # usuario 2
 ]
 
 teste_dados_usuarios_atuais = [
-    ('1', 'George', 'Bluth', 'george.bluth@reqres.in'),
-    ('2', 'Janet', 'Weaver', 'janet.weaver@reqres.in'),
-    ('3', 'Emma', 'Wong', 'emma.wong@reqres.in'),
-    ('4', 'Eve', 'Holt', 'eve.holt@reqres.in'),
-    ('5', 'Charles', 'Morris', 'charles.morris@reqres.in')
+    (1, 'George', 'Bluth', 'george.bluth@reqres.in'),   # usuário 1
+    (2, 'Janet', 'Weaver','janet.weaver@reqres.in')     # usuario 2
 ]
-# CRUD/ ICAE
-# Aplicações            APIs            Português
-# Create                Post            Criar / Publicar
-# Reach / Research      Get             Consultar / Pegar
-# Update                Put             Atualizar
-# Delete                Delete          Excluir
+
+# CRUD / ICAE
+# Aplicações        APIs        Português
+# Create            Post        Incluir / Publicar
+# Reach / Research  Get         Consultar / Pegar
+# Update            Put         Atualizar
+# Delete            Delete      Excluir
+
+@pytest.mark.parametrize('id,nome,sobrenome,email', teste_dados_usuarios_atuais)
+def testar_dados_usuarios(id,nome,sobrenome,email): # função que testa o algo
+   try:
+       response = requests.get(f'https://reqres.in/api/users/{id}')
+       jsonResponse = response.json()
+       id_obtido = jsonResponse['data']['id']
+       nome_obtido = jsonResponse['data']['first_name']
+       sobrenome_obtido = jsonResponse['data']['last_name']
+       email_obtido = jsonResponse['data']['email']
+
+       print(f'id: {id_obtido} \n nome: {nome_obtido} \n sobrenome: {sobrenome_obtido} \n email: {email_obtido}')
+       print(f'id: {id_obtido} - nome: {nome_obtido} - sobrenome: {sobrenome_obtido} - email: {email_obtido}')
+       print('id:{} \n nome:{} \n sobrenome:{} \n email:{}'.format(id_obtido, nome_obtido, sobrenome_obtido, email_obtido))
+
+       assert id_obtido == id
+       assert nome_obtido == nome
+       assert sobrenome_obtido == sobrenome
+       assert email_obtido == email
+
+   except HTTPError as http_fail : # Para o ISTQB, descobriu rodando é falha
+       print(f'Um erro de HTTP aconteceu: {http_fail}')
+   except Exception as fail:        # Qualquer exceção será tratada a seguir
+       print(f'Falha inesperada: {fail}')
 
 
-@pytest.mark.parametrize('id, nome, sobrenome, email', teste_dados_usuarios)
-def testar_dados_usuarios(id, nome, sobrenome, email): # função que testa algo
-    try:
-        requests.get(f'httpd://reqres.in/api/user/{id}')
-        jsonResponse = response.json()
-        id_obtido = jsonResponse['data']['id']
-        nome_obtido = jsonResponse['data']['first_name']
-        sobrenome_obtido = jsonResponse['data']['last_name']
-        email_obtido = jsonResponse['data']['email']
-
-        print(f'id: {id_obtido} - nome: {nome_obtido} - sobrenome: {sobrenome_obtido} - e-mail: {email_obtido}')
-
-        assert id_obtido == id
-        assert nome_obtido == nome
-        assert sobrenome_obtido == sobrenome
-        assert email_obtido == email
-
-
-    except HTTPError as http_err :
-        print(f'Um erro de HTTP foi detectado: {http_err}')
-    except Exception as fail:
-        print(f'Erro inesperado: {fail}')
-
-
-
-# def dados_usuarios(): # função que faz algo -- > Fora do computador
-# API
+#função que faz algo --> Fora do meu computador
+# API que vamos usar para fazer o teste:
 # https://reqres.in/api/users/{id}
+
