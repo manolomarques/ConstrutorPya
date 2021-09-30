@@ -14,27 +14,45 @@ def somar (num1, num2):
 def subtrair  (num1, num2):
     return num1 - num2
 
+# esse é um exemplo de demonstração
+'''
 def dividir(num1, num2):
     if num1 != 0:
         return num1 / num2
     else:
-        return "Não dividir número igual a 0"
+        return 'Não dividirás por 0'
+
+
+def dividir_zero(num1, num2):
+    return num1 / num2
+'''
+
+def dividir_try_except(num1, num2):
+    try:
+        return num1 / num2
+    except:
+        return 'Não dividirás por 0'
 
 def multiplicar  (num1, num2):
     return num1 * num2
 
-#testes unitários / Testes de UNidades
 
-#testes da função somar
+# Testes unitários / Testes de Unidades
+
+# Testes da função somar
+
 @pytest.mark.parametrize('num1, num2, resultado',[
     #valores
     (5, 4, 9),# testes 1
-    (3, 2, 5),# testes 2
+    (3, 3, 6),# testes 2
     (10, 6, 16),# testes 3
 ])
 def test_somar(num1, num2, resultado):
-    assert somar(num1, num2) == resultado
-'''
+    try:
+        assert somar(num1, num2) == resultado
+    except AssertionError:
+        print(f'Entrou no Except: {AssertionError}')
+
 def test_somar():
     # 1 - Configura / Prepara
     num1 = 8 # input / entrada
@@ -59,10 +77,20 @@ def teste_subtrair():
 
 def teste_multiplicar():
     assert multiplicar(3,7) == 21
-
+'''
 def testes_dividir():
     assert dividir(8,4) == 2
+
+def testes_dividir_por_zero():
+    assert dividir_zero(8,0) == 'Não dividirás por 0'
 '''
+@pytest.mark.parametrize('num1, num2, resultado',[
+    (8, 2, 4),
+    (20, 4, 5),
+    (10, 0, 'Não dividirás por 0'),
+])
+def testes_dividir_try_except(num1, num2, resultado):
+    assert dividir_try_except(num1, num2, resultado)) == 'Não dividirás por 0'
 
 if __name__ == '__main__':
     print_hi('Manoel')
@@ -73,7 +101,10 @@ if __name__ == '__main__':
     resultado = subtrair(14, 23)
     print(f'O resultado de subtrair é: {resultado}')
 
-    resultado = dividir(0, 782)
+    resultado = dividir(4, 782)
+    print(f'O resultado de dividir é: {resultado}')
+
+    resultado = dividir_zero(0, 782)
     print(f'O resultado de dividir é: {resultado}')
 
     resultado = multiplicar(14, 211)
