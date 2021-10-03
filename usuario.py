@@ -56,17 +56,17 @@ def testar_dados_usuarios(id,nome,sobrenome,email): # função que testa o algo
 
 # Leitor do Arquivo CSV
 def ler_dados_do_csv():
-    teste_dados_csv = []
-    nome_arquivo = 'usuarios.csv'
-    try:
-        with open(nome_arquivo,newline='') as csvfile:
-            dados = csv.reader(csvfile,delimiter=',')
-            next(dados)
-            for linha in dados:
-                teste_dados_csv.append(linha)
-        return teste_dados_csv
+    teste_dados_csv = [] # os [] vazio representa uma lista vazia que sera testada.
+    nome_arquivo = 'usuarios.csv' # aponta a direção do arquivo que contem os dados
+    try:  # tentar
+        with open(nome_arquivo,newline='') as csvfile: # como, abrir a(rquivo, nova linha em branco), e declara um "apelido" para o arquivo CSV = csvfile
+            dados = csv.reader(csvfile,delimiter=',') # reader para fazer a leitura do arquivo, (declaro o nome do arquivo e wlwmwnto dwlimitador ",")
+            next(dados) # crio um looping retornando a linha de cima novamente
+            for linha in dados: # Transformo meus dados em linhas
+                teste_dados_csv.append(linha) # declaro com append de onde vem os dados para ser considerado pelo def testes_dados_csv
+        return teste_dados_csv # retorno resultado de teste_dados_csv
     except FileNotFoundError:
-        print(f'Arquivo não encontrado: {nome_arquivo}')
+        print(f'Arquivo não encontrado: {nome_arquivo}') # utilizar o f fora das 'aspas' para incluir variaveis dentro de {chaves} para interagir com o texto do print
     except Exception as fail:
         print(f'Falha imprevista: {fail}')
 
