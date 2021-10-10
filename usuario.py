@@ -24,15 +24,29 @@ teste_dados_usuarios_atuais = [
 # Update            Put         Atualizar
 # Delete            Delete      Excluir
 
-@pytest.mark.parametrize('id,nome,sobrenome,email', teste_dados_usuarios_atuais)
+@pytest.mark.parametrize('id,nome,sobrenome,email', teste_dados_usuarios_atuais) # os campos chaves id,nome,sobrenome,email
 def testar_dados_usuarios(id,nome,sobrenome,email): # função que testa o algo
     try:
-        response = requests.get(f'https://reqres.in/api/users/{id}')
-        jsonResponse = response.json()
-        id_obtido = jsonResponse['data']['id']
-        nome_obtido = jsonResponse['data']['first_name']
-        sobrenome_obtido = jsonResponse['data']['last_name']
-        email_obtido = jsonResponse['data']['email']
+        response = requests.get(f'https://reqres.in/api/users/{id}') # get consultamos o edereço informado.
+        jsonResponse = response.json() # () não chamamos um dado em expecifico, quando não atribui valor dentro dos parenteses, estou dizendo que desejo receber o arquivo completo.
+        id_obtido = jsonResponse['data']['id'] # chama ID
+        nome_obtido = jsonResponse['data']['first_name'] # chama primeiro nome
+        sobrenome_obtido = jsonResponse['data']['last_name'] # chama ultimo nome
+        email_obtido = jsonResponse['data']['email'] # chama email
+        # consulte https://reqres.in/
+                        #{
+                         #   "data": {
+                          #      "id": 2,
+                           #     "email": "janet.weaver@reqres.in",
+                            #    "first_name": "Janet",
+                             #   "last_name": "Weaver",
+                              #  "avatar": "https://reqres.in/img/faces/2-image.jpg"
+                            #},
+                            #"support": {
+                            #   "url": "https://reqres.in/#support-heading",
+                            #  "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+                            #}
+                        #}
 
         print(f'id: {id_obtido} \n nome: {nome_obtido} \n sobrenome: {sobrenome_obtido} \n email: {email_obtido}')
         print(f'id: {id_obtido} - nome: {nome_obtido} - sobrenome: {sobrenome_obtido} - email: {email_obtido}')
@@ -70,19 +84,19 @@ def ler_dados_do_csv():
     except Exception as fail:
         print(f'Falha imprevista: {fail}')
 
-@pytest.mark.parametrize('id,nome,sobrenome,email', ler_dados_do_csv() )
+@pytest.mark.parametrize('id,nome,sobrenome,email', ler_dados_do_csv() ) # os campos chaves id,nome,sobrenome,email
 def testar_dados_usuarios_csv(id,nome,sobrenome,email): # função que testa o algo
     try:
-        response = requests.get(f'https://reqres.in/api/users/{id}')
+        response = requests.get(f'https://reqres.in/api/users/{id}') # get consultamos o edereço informado.
         jsonResponse = response.json()
         id_obtido = jsonResponse['data']['id']
         nome_obtido = jsonResponse['data']['first_name']
         sobrenome_obtido = jsonResponse['data']['last_name']
         email_obtido = jsonResponse['data']['email']
 
-        print(f'id: {id_obtido} \n nome: {nome_obtido} \n sobrenome: {sobrenome_obtido} \n email: {email_obtido}')
-        print(f'id: {id_obtido} - nome: {nome_obtido} - sobrenome: {sobrenome_obtido} - email: {email_obtido}')
-        print('id:{} \n nome:{} \n sobrenome:{} \n email:{}'.format(id_obtido, nome_obtido, sobrenome_obtido, email_obtido))
+        print(f'id: {id_obtido} \n nome: {nome_obtido} \n sobrenome: {sobrenome_obtido} \n email: {email_obtido}') # Exemplo 1  para pular linha com 'f' e \n
+        print(f'id: {id_obtido} - nome: {nome_obtido} - sobrenome: {sobrenome_obtido} - email: {email_obtido}') # Exemplo 2 de para pular linha com 'f' e '-'
+        print('id:{} \n nome:{} \n sobrenome:{} \n email:{}'.format(id_obtido, nome_obtido, sobrenome_obtido, email_obtido)) # Exemplo 3 de \n para pular a linha
         print(json.dumps(jsonResponse, indent=2, sort_keys=True))
 
         assert id_obtido == int(id)
