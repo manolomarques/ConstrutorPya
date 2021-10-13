@@ -108,3 +108,4 @@ def testar_dados_usuarios_csv(id,nome,sobrenome,email): # função que testa o a
         print(f'Um erro de HTTP aconteceu: {http_fail}')
     except Exception as fail:        # Qualquer exceção será tratada a seguir
         print(f'Falha inesperada: {fail}')
+        
