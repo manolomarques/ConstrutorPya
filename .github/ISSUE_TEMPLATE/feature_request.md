@@ -21,8 +21,10 @@ Add any other context or screenshots about the feature request here.
 
 ---
 
-name: Criação de branch
-about: necessário dividir etapas do curso
+name: Feature request
+about: Suggest an idea for this project
 title: 'Criação de branch'
 labels: 'branch, etapas'
 assignees: 'Mano'
+
+---
